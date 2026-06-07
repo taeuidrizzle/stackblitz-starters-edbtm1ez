@@ -19,7 +19,7 @@ export default function PadaytharApp() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] flex justify-center items-center">
-      <div className="w-full max-w-md bg-[#FFFDF9] rounded-[5px] overflow-hidden flex flex-col h-[850px] relative">
+      <div className="w-full max-w-md bg-[#FFFDF9] rounded-[5px] overflow-hidden flex flex-col h-[100vh] relative">
         
         {/* Dynamic Screen Area */}
         <div className="flex-1 overflow-y-auto hidden-scrollbar pb-24">
