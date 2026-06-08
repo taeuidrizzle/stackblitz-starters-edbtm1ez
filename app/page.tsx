@@ -186,13 +186,62 @@ function ChatScreen() {
 
 // --- Placeholder for Saved Screen ---
 function SavedScreen() {
+  const savedItems = [
+    { id: 1, type: "Post", title: "My Creative Thinking Journey", count: "2 days ago" },
+    { id: 2, type: "Post", title: "Web Design Concepts in 2026", count: "1 week ago" },
+    { id: 3, type: "Book", title: "The Art of Imagination", count: "Ch-4 Reading" },
+    { id: 4, type: "Book", title: "Modern Minimalist UI Guide", count: "Completed" },
+    { id: 5, type: "Article", title: "Deep Dive into Earth Tone Palettes", count: "5 mins read" },
+    { id: 6, type: "Article", title: "Why Typography Matters", count: "12 mins read" },
+  ];
+
   return (
-    <div className="p-6 text-center mt-20">
-      <div className="w-16 h-16 bg-[#F5EFE6] rounded-full flex items-center justify-center mx-auto mb-4">
-        <Icons.Bookmark className="w-8 h-8 text-[#C07047]" />
+    <div className="p-6">
+      {/* Header Utilities */}
+      <div className="flex justify-between items-center mb-6 pt-2">
+        <h1 className="text-2.5xl font-extrabold text-[#42332A]">Saved Items</h1>
+        <div className="w-10 h-10 rounded-full bg-[#EDE5D9] flex items-center justify-center text-[#C07047]">
+          <Icons.Bookmark className="w-5 h-5 fill-current" />
+        </div>
       </div>
-      <h2 className="text-xl font-bold text-[#2E2C2A]">Saved Items</h2>
-      <p className="text-sm text-[#8A8782] mt-2">Your bookmarked articles will appear here.</p>
+
+      {/* Styled Directory List with Dividing Lines */}
+      <div className="bg-[#FFFDF9] border border-[#F5EFE6] rounded-[24px] overflow-hidden max-w-sm mx-auto shadow-sm">
+        {savedItems.map((item, index) => (
+          <div 
+            key={item.id} 
+            className={`flex justify-between items-center p-4 cursor-pointer hover:bg-[#F5EFE6]/30 transition group
+              ${index !== savedItems.length - 1 ? "border-b border-[#F5EFE6]" : ""}`}
+          >
+            {/* Left Content Area */}
+            <div className="flex items-center space-x-3.5">
+              {/* Contextual Badge Icon Indicator */}
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs
+                ${item.type === "Post" ? "bg-[#E2EBE4] text-[#2F4234]" : ""}
+                ${item.type === "Book" ? "bg-[#F5EFE6] text-[#C07047]" : ""}
+                ${item.type === "Article" ? "bg-[#EAEFF2] text-[#4A6B82]" : ""}`
+              }>
+                {item.type[0]}
+              </div>
+
+              {/* Main Typography Metadata */}
+              <div>
+                <h3 className="font-bold text-[#2E2C2A] text-[15px] group-hover:text-[#C07047] transition duration-200">
+                  {item.title}
+                </h3>
+                <span className="text-[11px] font-semibold tracking-wider text-[#8A8782] uppercase mt-0.5 block">
+                  {item.type} • {item.count}
+                </span>
+              </div>
+            </div>
+
+            {/* Action Route Trigger Arrow */}
+            <div className="transform group-hover:translate-x-1 transition duration-200">
+              <Icons.ChevronRight />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
