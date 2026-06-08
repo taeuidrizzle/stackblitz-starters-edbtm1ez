@@ -120,7 +120,7 @@ const Icons = {
   ),
   Gear: () => (
     <svg
-      className="w-7 h-7"
+      className="w-6 h-6"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -154,8 +154,23 @@ const Icons = {
     </svg>
   ),
   Book: () => (
-    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+    </svg>
+  ),
+  BookWritten: () => (
+    <svg
+    className="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+    />
     </svg>
   ),
 };
@@ -475,11 +490,11 @@ function SavedScreen() {
 
   // 📝 Dummy Data: နောက်ပိုင်း Database (Supabase) ကနေ ဆွဲတင်ရင် သုံးရမယ့် ဖွဲ့စည်းပုံအတိုင်းပါ boss
   const savedArticles = [
-    { id: 1, title: "မြန်မာ့စာပေခေတ်တစ်ခေတ်၏ အလှည့်အပြောင်းများ", source: "Literature Magazine", date: "June 2", readTime: "5 min read", imgUrl: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=400&q=80" }
+    { id: 1, title: "မြန်မာ့စာပေခေတ်တခေတ်၏ အလှည့်အပြောင်းများ", source: "Literature Magazine", date: "June 2", readTime: "5 min read", imgUrl: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=400&q=80" }
   ];
 
   const savedPosts = [
-    { id: 1, author: "Zayar Lin", avatarText: "ZL", text: "ဆရာဇော်ဂျီရဲ့ 'သင်သေသွားသော်' ကဗျာလေးကို ပြန်ဖတ်မိတိုင်း ရင်ထဲ တစ်မျိုးပဲ။ လူဆိုတာ သေသွားပေမဲ့ နာမည်နဲ့ အလုပ်က ကျန်ခဲ့ရမယ်ဆိုတာ ဆရာဇော်ဂျီရဲ့ 'သင်သေသွားသော်' ကဗျာလေးကို ပြန်ဖတ်မိတိုင်း ရင်ထဲ တစ်မျိုးပဲ။ လူဆိုတာ သေသွားပေမဲ့ နာမည်နဲ့ အလုပ်က ကျန်ခဲ့ရမယ်ဆိုတာ", likes: 24, comments: 8, time: "2 hours ago" }
+    { id: 1, title: "Morden Books", author: "Zayar Lin", avatarText: "ZL", text: "ဆရာဇော်ဂျီရဲ့ 'သင်သေသွားသော်' ကဗျာလေးကို ပြန်ဖတ်မိတိုင်း ရင်ထဲ တမျိုးပဲ။ လူဆိုတာ သေသွားပေမဲ့ နာမည်နဲ့ အလုပ်က ကျန်ခဲ့ရမယ်ဆိုတာ ဆရာဇော်ဂျီရဲ့ 'သင်သေသွားသော်' ကဗျာလေးကို ပြန်ဖတ်မိတိုင်း ရင်ထဲ တမျိုးပဲ။ လူဆိုတာ သေသွားပေမဲ့ နာမည်နဲ့ အလုပ်က ကျန်ခဲ့ရမယ်ဆိုတာ", likes: 24, comments: 8, time: "2 hours ago" }
   ];
 
   const savedBooks = [
@@ -544,26 +559,46 @@ function SavedScreen() {
         )}
 
         {/* ==========================================
-            💬 TAB 2: POSTS (မူလ Layout အတိုင်း)
-           ========================================== */}
-        {activeTab === 'post' && (
-          <div className="flex flex-col space-y-4 animate-fadeIn">
-            {savedPosts.map((post) => (
-              <div key={post.id} className="bg-white border border-[#EBE4DA] rounded-[24px] p-4 shadow-sm hover:shadow-md transition">
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="w-9 h-9 rounded-full bg-[#4A6B82] flex items-center justify-center text-white text-xs font-bold shadow-inner">
-                    {post.avatarText}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#2E2C2A] text-xs">{post.author}</h4>
-                    <p className="text-[10px] text-[#908E8B] font-medium" aling-middle>{post.time}</p>
-                  </div>
-                </div>
-                <p className="text-xs text-[#42332A] leading-relaxed line-clamp-3 leading-[1.7]">{post.text}</p>
-              </div>
-            ))}
+    💬 TAB 2: POSTS (Boss ရဲ့ စိတ်ကြိုက် List Item Layout အသစ်)
+   ========================================== */}
+{activeTab === 'post' && (
+  <div className="flex flex-col bg-white border border-[#EBE4DA] rounded-[24px] divide-y divide-[#F5EFE6] overflow-hidden shadow-sm hover:shadow-md transition duration-300 animate-fadeIn">
+    {savedPosts.map((post) => (
+      <div 
+        key={post.id} 
+        className="flex items-center justify-between p-4 hover:bg-[#FFFDF9] transition duration-200 cursor-pointer group"
+      >
+        {/* ဘယ်ဘက်ခြမ်း- Avatar Tag နှင့် စာသားများ */}
+        <div className="flex items-center space-x-4 min-w-0">
+          
+          {/* 🔵 'P' Tag အဝိုင်းလေး (Active အဝါရောင်နု သို့မဟုတ် မူလ Theme ကာလာ) */}
+          <div className="w-10 h-10 rounded-full bg-[#E2EBE4] text-[#2D4030] flex items-center justify-center font-bold text-xs shadow-inner shrink-0">
+            P
           </div>
-        )}
+          
+          {/* 📝 ခေါင်းစဉ်နှင့် အချိန် */}
+          <div className="min-w-0">
+            <h4 className="font-bold text-[#2E2C2A] text-[14px] truncate leading-tight group-hover:text-[#C07047] transition duration-200">
+              {post.title || "My Creative Thinking Journey"} {/* 💡 Database က title သုံးဖို့ ပြင်ပေးထားပါတယ် */}
+            </h4>
+            <p className="text-[10px] text-[#908E8B] font-semibold mt-1 uppercase tracking-wider">
+              POST • {post.time || "2 DAYS AGO"}
+            </p>
+          </div>
+
+        </div>
+
+        {/* ညာဘက်ခြမ်း- မျှားခေါင်း (chevron-right) Icon လေး */}
+        <div className="text-[#8A8782] group-hover:text-[#C07047] transition duration-200 shrink-0 ml-2">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+
+      </div>
+    ))}
+  </div>
+)}
 
         {/* ==========================================
             📚 TAB 3: BOOKS (အောက်ကို ဆက်ဆင်းသွားမည့် Grid Flow ပုံစံ)
@@ -596,12 +631,115 @@ function SavedScreen() {
 }
 
 function ProfileScreen() {
+  // Screen ပြောင်းလဲမှုနှင့် Dark Mode ကို ထိန်းချုပ်မည့် State များ
+  const [currentView, setCurrentView] = useState<'profile' | 'edit' | 'settings'>('profile');
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
+  // ၁။ Edit Profile အတွက် စာရင်း
+  const editProfileData = [
+    { id: 'pic', label: 'Picture', value: 'Change Photo', type: 'link' },
+    { id: 'name', label: 'Name', value: 'Thurein', type: 'link' },
+    { id: 'username', label: 'Username', value: '@thurein_dev', type: 'link' },
+    { id: 'email', label: 'G-mail', value: 'thurein@example.com', type: 'link' },
+    { id: 'password', label: 'Password', value: '••••••••', type: 'link' },
+    { id: 'playlist', label: 'Playlist', value: 'My Playlists (16)', type: 'link' },
+  ];
+
+  // ၂။ Settings အတွက် စာရင်း
+  const settingsData = [
+    { id: 'dark_mode', label: 'Dark Mode', type: 'toggle' },
+    { id: 'font_size', label: 'Font Size', value: 'Medium', type: 'link' },
+    { id: 'font_style', label: 'Font', value: 'Pyidaungsu', type: 'link' },
+  ];
+
+  // ဘုံသုံး Back Button Header
+  const renderHeader = (title: string) => (
+    <div className="flex items-center mb-8 pt-2">
+      <button 
+        onClick={() => setCurrentView('profile')} 
+        className="w-10 h-10 rounded-full bg-[#F5EFE6] flex items-center justify-center text-[#C07047] mr-4 active:scale-95 transition"
+      >
+        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+      <h1 className="text-2.5xl font-extrabold text-[#42332A]">{title}</h1>
+    </div>
+  );
+
+  // ================= (က) EDIT PROFILE VIEW ပေါ်စေရန် ကြားဖြတ်ခြင်း =================
+  if (currentView === 'edit') {
+    return (
+      <div className="p-6">
+        {renderHeader('Edit Profile')}
+        <div className="flex flex-col divide-y divide-[#EDE5D9] max-w-sm mx-auto">
+          {editProfileData.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => console.log(`${item.id} clicked`)}
+              className="w-full flex items-center justify-between py-4 text-left transition active:opacity-60"
+            >
+              <span className="text-base font-bold text-[#2E2C2A]">{item.label}</span>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-[#8A8782] font-medium">{item.value}</span>
+                <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="#8A8782" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ================= (ခ) SETTINGS VIEW ပေါ်စေရန် ကြားဖြတ်ခြင်း =================
+  if (currentView === 'settings') {
+    return (
+      <div className="p-6">
+        {renderHeader('Settings')}
+        <div className="flex flex-col divide-y divide-[#EDE5D9] max-w-sm mx-auto">
+          {settingsData.map((item) => (
+            <div key={item.id} className="w-full flex items-center justify-between py-4">
+              <span className="text-base font-bold text-[#2E2C2A]">{item.label}</span>
+              {item.type === 'toggle' ? (
+                <button
+                  onClick={() => setIsDarkMode(!isDarkMode)}
+                  className={`w-11 h-6 flex items-center rounded-full p-0.5 transition-colors duration-300 ${
+                    isDarkMode ? 'bg-[#C07047]' : 'bg-[#EDE5D9]'
+                  }`}
+                >
+                  <div className={`bg-white w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ${isDarkMode ? 'translate-x-5' : 'translate-x-0'}`} />
+                </button>
+              ) : (
+                <button
+                  onClick={() => console.log(`${item.id} clicked`)}
+                  className="flex items-center space-x-2 active:opacity-60 transition"
+                >
+                  <span className="text-sm text-[#8A8782] font-medium">{item.value}</span>
+                  <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="#8A8782" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ================= (ဂ) မူလ MAIN PROFILE VIEW =================
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6 pt-2">
-        <h1 className="text-2.5xl font-extrabold text-[#42332A]">Padaythar</h1>
-        <button className="text-[#524F4A]">
-          <Icons.Gear />
+        <h1 className="text-2.5xl font-extrabold text-[#42332A]">အကောင့် (Profile)</h1>
+        {/* Gear Icon ကို နှိပ်လျှင် Settings သို့ သွားရန် */}
+        <button 
+          onClick={() => setCurrentView('settings')}
+          className="w-10 h-10 rounded-full bg-[#F5EFE6] flex items-center justify-center text-[#C07047] active:scale-95 transition"
+        >
+          <Icons.Gear/>
         </button>
       </div>
 
@@ -628,29 +766,58 @@ function ProfileScreen() {
         </div>
         <div>
           <p className="text-xl font-bold text-[#2E2C2A]">16</p>
-          <p className="text-[13px] text-[#8A8782]">Posts</p>
+          <p className="text-[13px] text-[#8A8782]">Playlists</p>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto mb-8">
-        <button className="bg-[#F5EFE6] font-bold text-sm text-[#2E2C2A] py-3.5 rounded-2xl">
+        {/* Edit Profile ကို နှိပ်လျှင် Edit View သို့ ပြောင်းရန် */}
+        <button 
+          onClick={() => setCurrentView('edit')}
+          className="bg-[#F5EFE6] font-bold text-sm text-[#2E2C2A] py-3.5 rounded-2xl active:scale-95 transition"
+        >
           Edit Profile
         </button>
-        <button className="bg-[#F5EFE6] font-bold text-sm text-[#2E2C2A] py-3.5 rounded-2xl">
+        {/* Settings ကို နှိပ်လျှင် Settings View သို့ ပြောင်းရန် */}
+        <button 
+          onClick={() => setCurrentView('settings')}
+          className="bg-[#F5EFE6] font-bold text-sm text-[#2E2C2A] py-3.5 rounded-2xl active:scale-95 transition"
+        >
           Settings
         </button>
       </div>
 
       <div className="bg-[#FFFDF9] border border-[#F5EFE6] rounded-2xl p-4 flex justify-between items-center max-w-sm mx-auto">
         <div className="flex items-center space-x-3 text-[#2E2C2A]">
-          <Icons.Bookmark className="w-6 h-6" />
-          <span className="font-bold">Saved</span>
+          <Icons.BookWritten />
+          <span className="font-semibold text-m">Books Written</span>
         </div>
         <Icons.ChevronRight />
       </div>
+
+      <span className="text-[11px] inline-block mt-7 ml-1 font-bold text-[#8A8782] uppercase tracking-wider px-1">Others</span>
+      <div className="rounded-xl bg-white p-2 mt-1 flex justify-between border text-[#2E2C2A]">
+          <span className="font-normal text-sm ml-1">{"Help & Support"}</span>
+      </div>
+      <div className="rounded-xl bg-white p-2 mt-1 flex justify-between border text-[#2E2C2A]">
+          <span className="font-normal text-sm ml-1">Report</span>
+      </div>
+      <div className="rounded-xl bg-white p-2 mt-1 flex justify-between border text-[#2E2C2A]">
+          <span className="font-normal text-sm ml-1">Contact Us</span>
+      </div>
+      <div className="rounded-xl bg-white p-2 mt-1 flex justify-between items-center border text-[#2E2C2A]">
+          <span className="font-normal text-red-500 text-sm ml-1">Log Out</span>
+            <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="18" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-red-500">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+      </div>
+
     </div>
   );
 }
+
 
 // --- BookScreen Component (Section-specific See All View) ---
 function BookScreen() {
