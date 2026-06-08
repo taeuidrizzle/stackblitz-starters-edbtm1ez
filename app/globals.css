@@ -25,3 +25,12 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera အတွက် */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE, Edge အတွက် */
+  scrollbar-width: none; /* Firefox အတွက် */
+}
