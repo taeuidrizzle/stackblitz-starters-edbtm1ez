@@ -250,7 +250,7 @@ function ProfileScreen() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6 pt-2">
-        <h1 className="text-2.5xl font-extrabold text-[#42332A]">Padaytíhar</h1>
+        <h1 className="text-2.5xl font-extrabold text-[#42332A]">Padaythar</h1>
         <button className="text-[#524F4A]"><Icons.Gear /></button>
       </div>
 
