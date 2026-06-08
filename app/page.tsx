@@ -338,6 +338,7 @@ function HomeScreen() {
   );
 }
 
+// --- ChatScreen Component (With Authentic Original Bell & CPU Icons) ---
 function ChatScreen() {
   const dbChatRooms = [
     {
@@ -464,64 +465,131 @@ function ChatScreen() {
     </div>
   );
 }
+
 // --- Placeholder for Saved Screen ---
 // --- Saved Screen Component (With Clean List Lines Layout) ---
+// --- SavedScreen Component (Dynamic 3-Tab System with Vertical Book Grid) ---
 function SavedScreen() {
-  const savedItems = [
-    { id: 1, type: "Post", title: "My Creative Thinking Journey", count: "2 days ago" },
-    { id: 2, type: "Post", title: "Web Design Concepts in 2026", count: "1 week ago" },
-    { id: 3, type: "Book", title: "The Art of Imagination", count: "Ch-4 Reading" },
-    { id: 4, type: "Book", title: "Modern Minimalist UI Guide", count: "Completed" },
-    { id: 5, type: "Article", title: "Deep Dive into Earth Tone Palettes", count: "5 mins read" },
-    { id: 6, type: "Article", title: "Why Typography Matters", count: "12 mins read" },
+  // 💡 လက်ရှိ ဘယ် Tab ကို ရောက်နေလဲ မှတ်မယ့် State ပါ (Default အနေနဲ့ 'article' ထားထားပါတယ်)
+  const [activeTab, setActiveTab] = useState('article');
+
+  // 📝 Dummy Data: နောက်ပိုင်း Database (Supabase) ကနေ ဆွဲတင်ရင် သုံးရမယ့် ဖွဲ့စည်းပုံအတိုင်းပါ boss
+  const savedArticles = [
+    { id: 1, title: "မြန်မာ့စာပေခေတ်တစ်ခေတ်၏ အလှည့်အပြောင်းများ", source: "Literature Magazine", date: "June 2", readTime: "5 min read", imgUrl: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=400&q=80" }
+  ];
+
+  const savedPosts = [
+    { id: 1, author: "Zayar Lin", avatarText: "ZL", text: "ဆရာဇော်ဂျီရဲ့ 'သင်သေသွားသော်' ကဗျာလေးကို ပြန်ဖတ်မိတိုင်း ရင်ထဲ တစ်မျိုးပဲ။ လူဆိုတာ သေသွားပေမဲ့ နာမည်နဲ့ အလုပ်က ကျန်ခဲ့ရမယ်ဆိုတာ ဆရာဇော်ဂျီရဲ့ 'သင်သေသွားသော်' ကဗျာလေးကို ပြန်ဖတ်မိတိုင်း ရင်ထဲ တစ်မျိုးပဲ။ လူဆိုတာ သေသွားပေမဲ့ နာမည်နဲ့ အလုပ်က ကျန်ခဲ့ရမယ်ဆိုတာ", likes: 24, comments: 8, time: "2 hours ago" }
+  ];
+
+  const savedBooks = [
+    { id: 1, title: "ပိတောက်ပွင့်ဆဲ လသာဆဲဝယ်", author: "တက္ကသိုလ်ဘုန်းနိုင်", coverUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=300&q=80" },
+    { id: 2, title: "သင်သေသွားသော်", author: "ဆရာဇော်ဂျီ", coverUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=300&q=80" },
+    { id: 3, title: "Modern Minimalist UI", author: "Dexl Design", coverUrl: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=300&q=80" },
+    { id: 4, title: "The Creative Mindset", author: "John Doe", coverUrl: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=300&q=80" }
   ];
 
   return (
     <div className="p-6">
-      {/* Header Utilities */}
+      {/* Page Header */}
       <div className="flex justify-between items-center mb-6 pt-2">
-        <h1 className="text-2.5xl font-extrabold text-[#42332A]">Saved Items</h1>
-        <div className="w-10 h-10 rounded-full bg-[#EDE5D9] flex items-center justify-center text-[#C07047]">
-          <Icons.Bookmark className="w-5 h-5 fill-current" />
+        <h1 className="text-2.5xl font-extrabold text-[#42332A]">သိမ်းဆည်းမှုများ (Saved)</h1>
+        <div className="w-10 h-10 rounded-full bg-[#F5EFE6] flex items-center justify-center text-[#C07047]">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+          </svg>
         </div>
       </div>
 
-      {/* Styled Directory List with Dividing Lines */}
-      <div className="bg-[#FFFDF9] border border-[#F5EFE6] rounded-[24px] overflow-hidden max-w-sm mx-auto shadow-sm">
-        {savedItems.map((item, index) => (
-          <div 
-            key={item.id} 
-            className={`flex justify-between items-center p-4 cursor-pointer hover:bg-[#F5EFE6]/30 transition group
-              ${index !== savedItems.length - 1 ? "border-b border-[#F5EFE6]" : ""}`}
+      {/* 🏷️ 3-Tab Navigator (Article, Post, Book အကူးအပြောင်းနေရာ) */}
+      <div className="flex bg-[#F5EFE6] rounded-[16px] p-1 mb-6">
+        {['article', 'post', 'book'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`flex-1 py-2.5 text-xs font-extrabold rounded-[12px] uppercase tracking-wider transition-all duration-200 ${
+              activeTab === tab
+                ? 'bg-[#C07047] text-white shadow-sm'
+                : 'text-[#8A8782] hover:text-[#42332A]'
+            }`}
           >
-            {/* Left Content Area */}
-            <div className="flex items-center space-x-3.5">
-              {/* Contextual Badge Icon Indicator */}
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs
-                ${item.type === "Post" ? "bg-[#E2EBE4] text-[#2F4234]" : ""}
-                ${item.type === "Book" ? "bg-[#F5EFE6] text-[#C07047]" : ""}
-                ${item.type === "Article" ? "bg-[#EAEFF2] text-[#4A6B82]" : ""}`
-              }>
-                {item.type[0]}
-              </div>
-
-              {/* Main Typography Metadata */}
-              <div>
-                <h3 className="font-bold text-[#2E2C2A] text-[15px] group-hover:text-[#C07047] transition duration-200">
-                  {item.title}
-                </h3>
-                <span className="text-[11px] font-semibold tracking-wider text-[#8A8782] uppercase mt-0.5 block">
-                  {item.type} • {item.count}
-                </span>
-              </div>
-            </div>
-
-            {/* Action Route Trigger Arrow */}
-            <div className="transform group-hover:translate-x-1 transition duration-200">
-              <Icons.ChevronRight />
-            </div>
-          </div>
+            {tab}
+          </button>
         ))}
+      </div>
+
+      {/* 📦 Tab Content Area */}
+      <div className="max-w-sm mx-auto">
+        
+        {/* ==========================================
+            📰 TAB 1: ARTICLES (မူလ Layout အတိုင်း)
+           ========================================== */}
+        {activeTab === 'article' && (
+          <div className="flex flex-col space-y-4 animate-fadeIn">
+            {savedArticles.map((article) => (
+              <div key={article.id} className="bg-white border border-[#EBE4DA] rounded-[24px] p-3 flex space-x-4 shadow-sm hover:shadow-md transition cursor-pointer">
+                <div className="w-20 h-20 rounded-xl shrink-0 bg-[#EDE5D9] overflow-hidden border border-[#EBE4DA]">
+                  <img src={article.imgUrl} alt={article.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 flex flex-col justify-between py-0.5">
+                  <h3 className="font-bold text-[#2E2C2A] text-[14px] leading-snug line-clamp-2">{article.title}</h3>
+                  <div className="flex justify-between items-center text-[10px] text-[#908E8B] font-semibold mt-1">
+                    <span>{article.source}</span>
+                    <span>{article.readTime}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ==========================================
+            💬 TAB 2: POSTS (မူလ Layout အတိုင်း)
+           ========================================== */}
+        {activeTab === 'post' && (
+          <div className="flex flex-col space-y-4 animate-fadeIn">
+            {savedPosts.map((post) => (
+              <div key={post.id} className="bg-white border border-[#EBE4DA] rounded-[24px] p-4 shadow-sm hover:shadow-md transition">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-9 h-9 rounded-full bg-[#4A6B82] flex items-center justify-center text-white text-xs font-bold shadow-inner">
+                    {post.avatarText}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#2E2C2A] text-xs">{post.author}</h4>
+                    <p className="text-[10px] text-[#908E8B] font-medium" aling-middle>{post.time}</p>
+                  </div>
+                </div>
+                <p className="text-xs text-[#42332A] leading-relaxed line-clamp-3 leading-[1.7]">{post.text}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ==========================================
+            📚 TAB 3: BOOKS (အောက်ကို ဆက်ဆင်းသွားမည့် Grid Flow ပုံစံ)
+           ========================================== */}
+        {activeTab === 'book' && (
+          /* 💡 grid-cols-3 ကို သုံးပြီး စာအုပ်တွေကို တစ်တန်းမှာ ၃ အုပ်စီ အောက်ကို ဆက်ဆင်းသွားအောင် လုပ်ထားပါတယ် boss */
+          <div className="grid grid-cols-3 gap-x-4 gap-y-6 animate-fadeIn">
+            {savedBooks.map((book) => (
+              <div key={book.id} className="flex flex-col group cursor-pointer">
+                {/* Book Cover Container (Spine လိုင်း မပါဘဲ Minimalist အပြည့်) */}
+                <div className="w-full aspect-[110/160] rounded-[16px] bg-[#EDE5D9] overflow-hidden shadow-sm border border-[#EBE4DA] transition duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                  <img src={book.coverUrl} alt={book.title} className="w-full h-full object-cover" />
+                </div>
+                {/* Book Information */}
+                {/* 💡 FIXED: leading-relaxed ထည့်ထားပြီး truncate နဲ့ စာတန်း မဆန့်ရင် ဖြတ်ပေးထားပါတယ် */}
+                <h4 className="font-bold text-[#2E2C2A] text-[11px] mt-2 truncate px-0.5 group-hover:text-[#C07047] transition leading-relaxed">
+                  {book.title}
+                </h4>
+                <p className="text-[9px] text-[#908E8B] mt-0.5 truncate px-0.5">
+                  {book.author}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
       </div>
     </div>
   );
