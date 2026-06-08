@@ -338,98 +338,128 @@ function HomeScreen() {
   );
 }
 
+// --- ChatScreen Component (Static Channels + DB Dynamic Group/Personal Chats) ---
 function ChatScreen() {
-  const chatSessions = [
+  // 💡 Database ကလာမယ့် Array ဒေတာထဲမှာ type ကို "group" သို့မဟုတ် "personal" ခွဲထားပါမယ်
+  const dbChatRooms = [
     {
-      id: 1,
-      type: 'system',
-      title: 'Announcements',
-      subtitle: 'New features are coming!',
-      icon: <Icons.Bell />,
+      id: "public-group-1",
+      type: "group", // 👥 Group Chat အမျိုးအစား
+      title: "အထွေထွေဆွေးနွေးခန်း (Public Lounge)",
+      lastMessage: "မင်္ဂလာပါဗျာ၊ အုပ်စုထဲကို ကြိုဆိုပါတယ်...",
+      time: "10:30 PM",
+      unreadCount: 5,
+      avatarBg: "bg-[#2D4030]",
+      iconText: "👥" // Group Icon သုံးထားပါတယ်
     },
     {
-      id: 2,
-      type: 'ai',
-      title: 'AI Chat',
-      subtitle: 'Hello! How can I assist you today?',
-      icon: <Icons.Cpu />,
-    },
-    {
-      id: 3,
-      type: 'user',
-      title: 'Lin Thet',
-      subtitle: 'Are you going to the event tomor...',
-      gender: 'male',
-    },
-    {
-      id: 4,
-      type: 'user',
-      title: 'Su Su',
-      subtitle: 'Sounds good!',
-      gender: 'female',
-    },
+      id: "personal-user-1",
+      type: "personal", // 👤 Personal Chat အမျိုးအစား
+      title: "Aung Ko (စာရေးဆရာ)",
+      lastMessage: "ဟုတ်ကဲ့၊ ဝတ္ထုအသစ်တင်ပေးထားပါတယ်ဗျာ။",
+      time: "Yesterday",
+      unreadCount: 0,
+      avatarBg: "bg-[#4A6B82]",
+      iconText: "AK" // နာမည်အတိုကောက် ပြထားပါတယ်
+    }
   ];
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-8 pt-2">
-        <div className="flex items-center space-x-3">
-          <svg
-            className="w-7 h-7 text-[#5C4033]"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-            />
+      {/* Page Header */}
+      <div className="flex justify-between items-center mb-6 pt-2">
+        <h1 className="text-2.5xl font-extrabold text-[#42332A]">မက်ဆေ့ခ်ျ (Chats)</h1>
+        <div className="w-10 h-10 rounded-full bg-[#F5EFE6] flex items-center justify-center text-[#C07047]">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
-          <h1 className="text-2.5xl font-extrabold text-[#42332A]">
-            Padaythar
-          </h1>
-        </div>
-        <div className="w-10 h-10 rounded-full bg-[#4A6B82] flex items-center justify-center">
-          <Icons.User className="w-5 h-5 text-white" />
         </div>
       </div>
 
-      <div className="space-y-5">
-        {chatSessions.map((chat) => (
-          <div
-            key={chat.id}
-            className="flex items-center space-x-4 p-1 cursor-pointer"
-          >
-            {chat.type === 'system' || chat.type === 'ai' ? (
-              <div className="w-14 h-14 rounded-full bg-[#F5EFE6] flex items-center justify-center">
-                {chat.icon}
+      {/* Main Chat Container */}
+      <div className="flex flex-col space-y-6 max-w-sm mx-auto">
+        
+        {/* ==============================================================
+            📌 PART 1: SYSTEM CHANNELS (ပုံသေရှိမည့် အခန်း ၂ ခန်း)
+           ============================================================== */}
+        <div className="flex flex-col space-y-3">
+          <span className="text-[11px] font-bold text-[#8A8782] uppercase tracking-wider px-1">System Channels</span>
+          
+          {/* Announcement Room */}
+          <div className="bg-[#FFFDF9] border border-[#EBE4DA] rounded-[20px] p-3.5 flex items-center space-x-4 shadow-sm shadow-[#42332A]/5 hover:shadow-md transition cursor-pointer">
+            <div className="w-12 h-12 rounded-xl bg-[#C07047] flex items-center justify-center text-white shadow-sm shrink-0">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-baseline">
+                <h3 className="font-bold text-[#2E2C2A] text-[15px]">Announcement</h3>
+                <span className="text-[10px] text-[#908E8B] font-medium">Official</span>
               </div>
-            ) : (
-              <div
-                className={`w-14 h-14 rounded-full flex items-center justify-center overflow-hidden relative border ${
-                  chat.gender === 'male' ? 'bg-[#34547A]' : 'bg-[#D9825D]'
-                }`}
-              >
-                <div className="absolute bottom-0 w-10 h-10 bg-[#EFEFEF] rounded-full translate-y-3" />
-                <div
-                  className={`absolute top-3 w-6 h-6 bg-[#2E2B2A] ${
-                    chat.gender === 'male' ? 'rounded-full' : 'rounded-t-full'
-                  }`}
-                />
-              </div>
-            )}
-            <div className="flex-1 border-b border-[#F5EFE6] pb-3">
-              <h3 className="font-bold text-[#2E2C2A] text-[16px]">
-                {chat.title}
-              </h3>
-              <p className="text-sm text-[#7A7875] mt-0.5 line-clamp-1">
-                {chat.subtitle}
-              </p>
+              <p className="text-xs text-[#908E8B] truncate mt-1">အက်ပ်ဗားရှင်းအသစ် ထွက်ရှိလာပါပြီ...</p>
             </div>
           </div>
-        ))}
+
+          {/* AI Chat Room */}
+          <div className="bg-[#FFFDF9] border border-[#EBE4DA] rounded-[20px] p-3.5 flex items-center space-x-4 shadow-sm shadow-[#42332A]/5 hover:shadow-md transition cursor-pointer">
+            <div className="w-12 h-12 rounded-xl bg-[#4A6B82] flex items-center justify-center text-white shadow-sm shrink-0">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-baseline">
+                <h3 className="font-bold text-[#2E2C2A] text-[15px]">AI Assistant</h3>
+                <span className="text-[10px] text-[#2D4030] bg-[#E2EBE4] px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider">Online</span>
+              </div>
+              <p className="text-xs text-[#908E8B] truncate mt-1">ကျွန်ုပ်အား မည်သည့်မေးခွန်းမဆို မေးမြန်းနိုင်ပါတယ်...</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="flex flex-col space-y-3">
+          <span className="text-[11px] font-bold text-[#8A8782] uppercase tracking-wider px-1">Conversations</span>
+
+          {dbChatRooms.map((room) => (
+            <div 
+              key={room.id} 
+              className="bg-white border border-[#EBE4DA] rounded-[24px] p-3.5 flex items-center space-x-4 shadow-sm shadow-[#42332A]/5 hover:shadow-md transition duration-300 cursor-pointer"
+            >
+              {/* 💡 UI Logic: Group ဆိုရင် လေးထောင့်ဝိုင်းဝိုင်း၊ Personal ဆိုရင် စက်ဝိုင်းပုံစံ ခွဲခြားထားပါတယ် */}
+              <div className={`w-12 h-12 ${room.type === "group" ? "rounded-[16px]" : "rounded-full"} ${room.avatarBg} flex items-center justify-center text-white font-extrabold text-sm shadow-inner shrink-0`}>
+                {room.iconText}
+              </div>
+
+              {/* Chat Info */}
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-baseline">
+                  {/* ခေါင်းစဉ်ဘေးမှာ Group လား Personal လား ခွဲရလွယ်အောင် Badge သေးသေးလေး ထည့်ပေးထားပါတယ် */}
+                  <div className="flex items-center space-x-1.5 min-w-0">
+                    <h3 className="font-bold text-[#2E2C2A] text-[15px] truncate">{room.title}</h3>
+                    <span className={`text-[9px] px-1 py-0.2 rounded-sm uppercase tracking-tight font-bold shrink-0 ${room.type === "group" ? "bg-[#F5EFE6] text-[#C07047]" : "bg-[#E2EBE4] text-[#2D4030]"}`}>
+                      {room.type}
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-[#908E8B] font-semibold shrink-0 ml-2">{room.time}</span>
+                </div>
+                
+                <div className="flex justify-between items-center mt-1">
+                  <p className="text-xs text-[#8A8782] truncate pr-2 flex-1">{room.lastMessage}</p>
+                  
+                  {room.unreadCount > 0 && (
+                    <span className="w-5 h-5 bg-[#C07047] text-white text-[10px] font-extrabold rounded-full flex items-center justify-center shrink-0">
+                      {room.unreadCount}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+
+        </div>
+
       </div>
     </div>
   );
