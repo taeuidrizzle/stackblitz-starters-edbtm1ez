@@ -734,13 +734,9 @@ function ProfileScreen() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6 pt-2">
         <h1 className="text-2.5xl font-extrabold text-[#42332A]">အကောင့် (Profile)</h1>
-        {/* Gear Icon ကို နှိပ်လျှင် Settings သို့ သွားရန် */}
-        <button 
-          onClick={() => setCurrentView('settings')}
-          className="w-10 h-10 rounded-full bg-[#F5EFE6] flex items-center justify-center text-[#C07047] active:scale-95 transition"
-        >
+        <div className="w-10 h-10 rounded-full bg-[#F5EFE6] flex items-center justify-center text-[#C07047]">
           <Icons.Gear/>
-        </button>
+        </div>
       </div>
 
       <div className="flex flex-col items-center text-center mt-4">
