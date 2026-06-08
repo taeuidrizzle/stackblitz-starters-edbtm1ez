@@ -670,7 +670,7 @@ function BookScreen() {
           <div key={section.id} className="flex flex-col">
             
             {/* Roll Header (Title & See More Button) */}
-            <div className="flex justify-between items-end mb-3 px-1">
+            <div className="flex justify-between items-justify mb-3 px-1">
               <h2 className="font-extrabold text-[#2E2C2A] text-[16px] tracking-wide leading-relaxed pr-2 flex-1">{section.title}</h2>
               <button 
                 onClick={() => setShowAll(section.id)} 
