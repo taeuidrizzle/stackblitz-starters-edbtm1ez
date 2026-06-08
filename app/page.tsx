@@ -338,29 +338,27 @@ function HomeScreen() {
   );
 }
 
-// --- ChatScreen Component (Static Channels + DB Dynamic Group/Personal Chats) ---
 function ChatScreen() {
-  // 💡 Database ကလာမယ့် Array ဒေတာထဲမှာ type ကို "group" သို့မဟုတ် "personal" ခွဲထားပါမယ်
   const dbChatRooms = [
     {
       id: "public-group-1",
-      type: "group", // 👥 Group Chat အမျိုးအစား
+      type: "group", 
       title: "အထွေထွေဆွေးနွေးခန်း (Public Lounge)",
       lastMessage: "မင်္ဂလာပါဗျာ၊ အုပ်စုထဲကို ကြိုဆိုပါတယ်...",
       time: "10:30 PM",
       unreadCount: 5,
       avatarBg: "bg-[#2D4030]",
-      iconText: "👥" // Group Icon သုံးထားပါတယ်
+      iconText: "👥" 
     },
     {
       id: "personal-user-1",
-      type: "personal", // 👤 Personal Chat အမျိုးအစား
+      type: "personal", 
       title: "Aung Ko (စာရေးဆရာ)",
       lastMessage: "ဟုတ်ကဲ့၊ ဝတ္ထုအသစ်တင်ပေးထားပါတယ်ဗျာ။",
       time: "Yesterday",
       unreadCount: 0,
       avatarBg: "bg-[#4A6B82]",
-      iconText: "AK" // နာမည်အတိုကောက် ပြထားပါတယ်
+      iconText: "AK" 
     }
   ];
 
@@ -380,16 +378,17 @@ function ChatScreen() {
       <div className="flex flex-col space-y-6 max-w-sm mx-auto">
         
         {/* ==============================================================
-            📌 PART 1: SYSTEM CHANNELS (ပုံသေရှိမည့် အခန်း ၂ ခန်း)
+            📌 PART 1: SYSTEM CHANNELS (ခေါင်းလောင်းနှင့် CPU Icon စစ်စစ်များ)
            ============================================================== */}
         <div className="flex flex-col space-y-3">
           <span className="text-[11px] font-bold text-[#8A8782] uppercase tracking-wider px-1">System Channels</span>
           
-          {/* Announcement Room */}
+          {/* 🔔 Announcement (မူလ ခေါင်းလောင်း Icon အစစ်) */}
           <div className="bg-[#FFFDF9] border border-[#EBE4DA] rounded-[20px] p-3.5 flex items-center space-x-4 shadow-sm shadow-[#42332A]/5 hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 rounded-xl bg-[#C07047] flex items-center justify-center text-white shadow-sm shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-[#F5EFE6] flex items-center justify-center text-[#C07047] shrink-0">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                {/* Bell SVG Line */}
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
               </svg>
             </div>
             <div className="flex-1 min-w-0">
@@ -401,11 +400,12 @@ function ChatScreen() {
             </div>
           </div>
 
-          {/* AI Chat Room */}
+          {/* 🎛️ AI Chat Room (မူလ CPU/Microchip Icon အစစ်) */}
           <div className="bg-[#FFFDF9] border border-[#EBE4DA] rounded-[20px] p-3.5 flex items-center space-x-4 shadow-sm shadow-[#42332A]/5 hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 rounded-xl bg-[#4A6B82] flex items-center justify-center text-white shadow-sm shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-[#E2EBE4] flex items-center justify-center text-[#2D4030] shrink-0">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                {/* CPU Microchip SVG Line */}
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 5h10a2 2 0 012 2v10a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2zM9 9h6v6H9V9z" />
               </svg>
             </div>
             <div className="flex-1 min-w-0">
@@ -419,6 +419,9 @@ function ChatScreen() {
 
         </div>
 
+        {/* ==============================================================
+            🌐 PART 2: DATABASE CHANNELS (Conversations နေရာ)
+           ============================================================== */}
         <div className="flex flex-col space-y-3">
           <span className="text-[11px] font-bold text-[#8A8782] uppercase tracking-wider px-1">Conversations</span>
 
@@ -427,15 +430,12 @@ function ChatScreen() {
               key={room.id} 
               className="bg-white border border-[#EBE4DA] rounded-[24px] p-3.5 flex items-center space-x-4 shadow-sm shadow-[#42332A]/5 hover:shadow-md transition duration-300 cursor-pointer"
             >
-              {/* 💡 UI Logic: Group ဆိုရင် လေးထောင့်ဝိုင်းဝိုင်း၊ Personal ဆိုရင် စက်ဝိုင်းပုံစံ ခွဲခြားထားပါတယ် */}
               <div className={`w-12 h-12 ${room.type === "group" ? "rounded-[16px]" : "rounded-full"} ${room.avatarBg} flex items-center justify-center text-white font-extrabold text-sm shadow-inner shrink-0`}>
                 {room.iconText}
               </div>
 
-              {/* Chat Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-baseline">
-                  {/* ခေါင်းစဉ်ဘေးမှာ Group လား Personal လား ခွဲရလွယ်အောင် Badge သေးသေးလေး ထည့်ပေးထားပါတယ် */}
                   <div className="flex items-center space-x-1.5 min-w-0">
                     <h3 className="font-bold text-[#2E2C2A] text-[15px] truncate">{room.title}</h3>
                     <span className={`text-[9px] px-1 py-0.2 rounded-sm uppercase tracking-tight font-bold shrink-0 ${room.type === "group" ? "bg-[#F5EFE6] text-[#C07047]" : "bg-[#E2EBE4] text-[#2D4030]"}`}>
@@ -464,7 +464,6 @@ function ChatScreen() {
     </div>
   );
 }
-
 // --- Placeholder for Saved Screen ---
 // --- Saved Screen Component (With Clean List Lines Layout) ---
 function SavedScreen() {
