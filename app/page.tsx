@@ -630,7 +630,6 @@ function BookScreen() {
           {selectedSection.books.map((book) => (
             <div key={book.id} className="bg-white border border-[#EBE4DA] rounded-[24px] p-3 flex space-x-4 shadow-sm shadow-[#42332A]/5 hover:shadow-md transition cursor-pointer">
               <div className="w-16 h-24 rounded-xl shrink-0 bg-[#EDE5D9] overflow-hidden shadow-md relative border border-[#EBE4DA]">
-                <div className="absolute top-0 left-0 w-1 h-full bg-black/10 z-10" /> 
                 <img src={book.coverUrl} alt={book.title} className="w-full h-full object-cover" loading="eager" />
               </div>
               <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
@@ -687,7 +686,6 @@ function BookScreen() {
               {section.books.map((book) => (
                 <div key={book.id} className="w-[110px] shrink-0 snap-start group cursor-pointer">
                   <div className="w-[110px] h-[160px] rounded-[10px] bg-[#EDE5D9] overflow-hidden shadow-md border border-[#EBE4DA] relative transition duration-300 group-hover:shadow-lg group-hover:-translate-y-1">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-black/10 z-10" />
                     <img src={book.coverUrl} alt={book.title} className="w-full h-full object-cover" loading="eager" />
                     {book.progress > 0 && (
                       <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-black/20 backdrop-blur-xs">
