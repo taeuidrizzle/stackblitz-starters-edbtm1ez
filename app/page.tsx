@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useEffect } from "react";
 
 // --- SVG Icons Map (No npm Package Required) ---
 const Icons = {
@@ -302,6 +303,22 @@ export default function PadaytharApp() {
       </div>
     </div>
   );
+
+  
+  useEffect(() => {
+    if (!window.visualViewport) return;
+  
+    const handleResize = () => {
+      if (window.visualViewport && window.visualViewport.height >= window.screen.height - 100) {
+        if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
+      }
+    };
+  
+    window.visualViewport.addEventListener("resize", handleResize);
+    return () => window.visualViewport?.removeEventListener("resize", handleResize);
+  }, []);
 }
 
 // --- Screens Layouts ---
