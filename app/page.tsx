@@ -238,7 +238,7 @@ export default function PadaytharApp() {
         </div>
 
         {/* Unified Bottom Navigation (Same for all screens) */}
-        <div className="absolute bottom-0 left-0 right-0 bg-[#FFFDF9]/90 backdrop-blur-md border-t border-[#F5EFE6] px-6 py-4 flex justify-between items-center z-10 has-[:focus]:hidden">
+        <div className={`absolute bottom-0 left-0 right-0 bg-[#FFFDF9]/90 backdrop-blur-md border-t border-[#F5EFE6] px-6 py-4 flex justify-between items-center z-10 [:has(input:focus)_&]:hidden`}>
           <button
             onClick={() => setCurrentTab('home')}
             className={`flex flex-col items-center space-y-1 transition-all ${
