@@ -1,6 +1,5 @@
 'use client';
-import { useState } from 'react';
-import { useEffect } from "react";
+import { useState } from 'react'
 
 // --- SVG Icons Map (No npm Package Required) ---
 const Icons = {
@@ -303,22 +302,6 @@ export default function PadaytharApp() {
       </div>
     </div>
   );
-
-  
-  useEffect(() => {
-    if (!window.visualViewport) return;
-  
-    const handleResize = () => {
-      if (window.visualViewport && window.visualViewport.height >= window.screen.height - 100) {
-        if (document.activeElement instanceof HTMLElement) {
-          document.activeElement.blur();
-        }
-      }
-    };
-  
-    window.visualViewport.addEventListener("resize", handleResize);
-    return () => window.visualViewport?.removeEventListener("resize", handleResize);
-  }, []);
 }
 
 // --- Screens Layouts ---
@@ -457,7 +440,8 @@ function HomeScreen() {
           placeholder="စာအုပ်များ၊ ဆောင်းပါးများ စာရေးဆရာများကို ရှာဖွေပါ..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-white border border-[#F5EFE6] rounded-2xl pl-11 pr-4 py-3.5 text-xs font-bold text-[#2E2C2A] placeholder-[#908E8B] focus:outline-none focus:border-[#C07047] shadow-sm"
+          onBlur={(e) => e.currentTarget.blur()}
+          className="w-full bg-white border border-[#F5EFE6] rounded-2xl pl-11 pr-4 py-3.5 text-xs font-bold text-[#2E2C2A] placeholder-[#908E8B] focus:outline-none focus:border-[#C07047]  shadow-sm"
         />
       </div>
 
