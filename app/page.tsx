@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 // --- SVG Icons Map (No npm Package Required) ---
 const Icons = {
@@ -238,7 +239,9 @@ export default function PadaytharApp() {
         </div>
 
         {/* Unified Bottom Navigation (Same for all screens) */}
-        <div className={`absolute bottom-0 left-0 right-0 bg-[#FFFDF9]/90 backdrop-blur-md border-t border-[#F5EFE6] px-6 py-4 flex justify-between items-center z-10 [:has(input:focus)_&]:hidden`}>
+        <div
+          className={`absolute bottom-0 left-0 right-0 bg-[#FFFDF9]/90 backdrop-blur-md border-t border-[#F5EFE6] px-6 py-4 flex justify-between items-center z-10`}
+        >
           <button
             onClick={() => setCurrentTab('home')}
             className={`flex flex-col items-center space-y-1 transition-all ${
@@ -308,6 +311,7 @@ export default function PadaytharApp() {
 
 function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   // 📝 DB Data: စာအုပ်တန်းလေးများအတွက် Database Array Structure
   const dbTrendingBooks = [
@@ -438,10 +442,9 @@ function HomeScreen() {
         <input
           type="text"
           placeholder="စာအုပ်များ၊ ဆောင်းပါးများ စာရေးဆရာများကို ရှာဖွေပါ..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onBlur={(e) => e.currentTarget.blur()}
-          className="w-full bg-white border border-[#F5EFE6] rounded-2xl pl-11 pr-4 py-3.5 text-xs font-bold text-[#2E2C2A] placeholder-[#908E8B] focus:outline-none focus:border-[#C07047]  shadow-sm"
+          readOnly
+          onFocus={() => router .push('/search')}
+          className="w-full bg-white border border-[#F5EFE6] rounded-2xl pl-11 pr-4 py-3.5 text-xs font-bold text-[#2E2C2A] placeholder-[#908E8B] focus:outline-none focus:border-[#C07047] shadow-sm"
         />
       </div>
 
