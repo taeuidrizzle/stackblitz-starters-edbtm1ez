@@ -1,8 +1,8 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { profile } from 'console';
 
-// --- SVG Icons Map (No npm Package Required) ---
 const Icons = {
   Home: () => (
     <svg
@@ -443,10 +443,12 @@ function HomeScreen() {
           type="text"
           placeholder="စာအုပ်များ၊ ဆောင်းပါးများ စာရေးဆရာများကို ရှာဖွေပါ..."
           readOnly
-          onFocus={() => router .push('/search')}
+          onFocus={() => router.push('/search')}
           className="w-full bg-white border border-[#F5EFE6] rounded-2xl pl-11 pr-4 py-3.5 text-xs font-bold text-[#2E2C2A] placeholder-[#908E8B] focus:outline-none focus:border-[#C07047] shadow-sm"
         />
       </div>
+
+      <HeroCarousel />
 
       {/* 📚 3. HORIZONTAL BOOKS ROW (စာအုပ်တန်းလေးများ) */}
       <div className="mb-8">
@@ -501,7 +503,6 @@ function HomeScreen() {
             >
               {/* Left Content Area */}
               <div className="flex space-x-4 min-w-0 flex-1">
-                {/* Article Image (Spine လိုင်းမပါ ကောက်ကြောင်းဝိုင်းစတိုင်) */}
                 <div className="w-[100px] h-[100px] rounded-[20px] overflow-hidden bg-[#EDE5D9] shrink-0 border border-[#EBE4DA]">
                   <img
                     src={article.imgUrl}
@@ -521,7 +522,6 @@ function HomeScreen() {
                 </div>
               </div>
 
-              {/* Right Action Button (ပုံထဲကအတိုင်း စက်ဝိုင်းထဲက မျှားစောင်းခလုတ်) */}
               <div className="w-9 h-9 rounded-full bg-[#F5EFE6] group-hover:bg-[#C07047] text-[#42332A] group-hover:text-white flex items-center justify-center transition shrink-0 ml-3 mt-1 shadow-sm">
                 <Icons.ArrowUpRight />
               </div>
@@ -540,10 +540,10 @@ function HomeScreen() {
           {dbBtags.map((tags) => (
             <div
               key={tags.id}
-              className="rounded-lg flex h-min cursor-pointer w-min whitespace-nowrap border"
+              className="rounded-lg flex h-min cursor-pointer w-min whitespace-nowrap border overflow-hidden"
             >
               <span
-                className={`text-xs font-black font-[600] hover:text-[#C07047] hover:bg-[#F5EFE6] p-1.5 duration-200 ${tags.name}`}
+                className={`text-xs font-black font-[500] hover:text-[#C07047] hover:bg-[#F5EFE6] p-1.5 duration-200 ${tags.name}`}
               >
                 {tags.name}
               </span>
@@ -1576,6 +1576,101 @@ function BookScreen() {
               ))}
             </div>
           </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HeroCarousel() {
+  const dbBanners = [
+    {
+      id: 1,
+      title: 'Tome of the Sun',
+      coverUrl:
+        'https://t4.ftcdn.net/jpg/06/88/66/31/240_F_688663136_CYDZXf10utvUG7QScsByISc5AaEDf68F.jpg',
+    },
+    {
+      id: 2,
+      title: 'The Last Kingdom',
+      coverUrl:
+        'https://t3.ftcdn.net/jpg/09/91/76/34/240_F_991763499_P7SgGRIqjdgx7scKFGrqCoVO8aNouSaa.jpg',
+    },
+    {
+      id: 3,
+      title: 'Shadow of Light',
+      coverUrl:
+        'https://t4.ftcdn.net/jpg/09/07/29/23/240_F_907292320_XG1vaCIbwTdBLTU3nFKaS5sp6AKIkuev.jpg',
+    },
+    {
+      id: 4,
+      title: 'kfjjfuj',
+      coverUrl:
+        'https://t3.ftcdn.net/jpg/07/64/23/42/240_F_764234245_D6EcMYl1Gs9Dzb1xZUThk8D2KrXuw7pc.jpg',
+    },
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (!carouselRef.current) return;
+    const scrollLeft = carouselRef.current.scrollLeft;
+    const width = carouselRef.current.offsetWidth - 48;
+    const index = Math.round(scrollLeft / width);
+
+    if (index >= 0 && index < dbBanners.length) {
+      setActiveIndex(index);
+    }
+  };
+
+  const scrollToSlide = (index: number) => {
+    if (!carouselRef.current) return;
+    const cardWidth = carouselRef.current.querySelector('div')?.offsetWidth || 340;
+    const totalWidth = cardWidth + 24;
+
+    carouselRef.current.scrollTo({
+      left: totalWidth * index,
+      behavior: 'smooth' 
+    });
+
+    setActiveIndex(index);
+  };
+
+  return (
+    <div className="w-full mb-6">
+      <div
+        ref={carouselRef}
+        onScroll={handleScroll}
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar space-x-2 px-6 pb-4"
+        style={{ scrollSnapType: 'x mandatory' }}
+      >
+        {dbBanners.map((banner, index) => (
+          <div
+            key={banner.id}
+            className="w-[calc(100vw-48px)] max-w-[310px] shrink-0 snap-center select-none cursor-pointer"
+          >
+            <div className="w-full aspect-[2/1] rounded-[24px] overflow-hidden bg-[#EDE5D9] border border-[#EBE4DA] shadow-sm active:scale-[0.98] transition duration-200">
+              <img
+                src={banner.coverUrl}
+                alt={banner.title}
+                className="w-full h-full object-cover pointer-events-none"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* 2. PAGINATION DOT*/}
+      <div className="flex justify-center items-center space-x-2 mt-1">
+        {dbBanners.map((_, index) => (
+          <div
+            key={index}
+            onClick={() => scrollToSlide(index)}
+            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+              activeIndex === index ? 'w-4 bg-[#C07047]' : 'w-1.5 bg-[#EBE4DA]'
+            }`}
+          />
         ))}
       </div>
     </div>
