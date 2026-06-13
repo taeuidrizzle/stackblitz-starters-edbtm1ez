@@ -1648,7 +1648,7 @@ function HeroCarousel() {
         {dbBanners.map((banner, index) => (
           <div
             key={banner.id}
-            className="w-[calc(100vw-48px)] max-w-[310px] shrink-0 snap-center select-none cursor-pointer"
+            className="w-[calc(100vw-48px)] max-w-[300px] shrink-0 snap-center select-none cursor-pointer"
           >
             <div className="w-full aspect-[2/1] rounded-[24px] overflow-hidden bg-[#EDE5D9] border border-[#EBE4DA] shadow-sm active:scale-[0.98] transition duration-200">
               <img
